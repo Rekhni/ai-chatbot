@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import './ChatBotApp.css';
 import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
+const apiKey = import.meta.env.VITE_API_KEY;
+
 
 // eslint-disable-next-line react/prop-types
 const ChatBotApp = ({ onGoBack, chats, setChats, activeChat, setActiveChat, onNewChat }) => {
@@ -68,7 +70,7 @@ const ChatBotApp = ({ onGoBack, chats, setChats, activeChat, setActiveChat, onNe
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer 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`
+          Authorization: `Bearer ${apiKey}`
         },
         body: JSON.stringify({
            model: "gpt-4o-mini",
