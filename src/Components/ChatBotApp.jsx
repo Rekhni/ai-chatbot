@@ -4,7 +4,7 @@ import './ChatBotApp.css';
 import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
 const apiKey = import.meta.env.VITE_API_KEY;
-
+console.log(apiKey);
 
 // eslint-disable-next-line react/prop-types
 const ChatBotApp = ({ onGoBack, chats, setChats, activeChat, setActiveChat, onNewChat }) => {
@@ -38,7 +38,7 @@ const ChatBotApp = ({ onGoBack, chats, setChats, activeChat, setActiveChat, onNe
   }
 
   async function sendMessage() {
-    if (inputValue.trim === '') return;
+    if (inputValue.trim() === '') return;
 
     const newMessage = {
         type: 'prompt',
@@ -73,7 +73,7 @@ const ChatBotApp = ({ onGoBack, chats, setChats, activeChat, setActiveChat, onNe
           Authorization: `Bearer ${apiKey}`
         },
         body: JSON.stringify({
-           model: "gpt-4o-mini",
+           model: "gpt-3.5-turbo",
            messages: [{ role: 'user', content: inputValue }],
            max_tokens: 500
         })
@@ -82,6 +82,7 @@ const ChatBotApp = ({ onGoBack, chats, setChats, activeChat, setActiveChat, onNe
       
 
       const data = await response.json();
+      console.log(data);
       const chatResponse = data.choices[0].message.content.trim();
 
       const newResponse = {
@@ -89,6 +90,8 @@ const ChatBotApp = ({ onGoBack, chats, setChats, activeChat, setActiveChat, onNe
         text: chatResponse,
         timestamp: new Date().toLocaleTimeString()
       }
+
+      
 
       const updatedMessagesWithResponse = [...updatedMessages, newResponse];
       setMessages(updatedMessagesWithResponse);
